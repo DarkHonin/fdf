@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:26:17 by wgourley          #+#    #+#             */
-/*   Updated: 2018/06/10 15:30:21 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/06/10 16:42:35 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_fdf(t_fdf_data *dat)
 	
 	ft_putendl("Dumping fdf object");
 	ft_buffreset(dat->point_buffer);
-	while (ft_buffget(sizeof(point), dat->point_buffer, &point))
+	while (GET_POINT(dat, point))
 		print_fdf_point(point);
 }
 

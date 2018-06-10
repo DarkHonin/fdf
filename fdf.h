@@ -6,12 +6,14 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:40 by wgourley          #+#    #+#             */
-/*   Updated: 2018/06/10 16:14:38 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/06/10 16:42:50 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _FDF_H_
 # define _FDF_H_
+
+# define GET_POINT(buff, ret) ft_buffget(sizeof(ret), buff->point_buffer, &ret) 
 
 #include "libft.h"
 #include <stdio.h>
