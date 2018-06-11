@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:13 by wgourley          #+#    #+#             */
-/*   Updated: 2018/06/10 15:26:29 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/06/11 13:14:22 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <stdlib.h>
 
 
-t_fdf_data  *read_fdf(int fd)
+t_mesh  *read_fdf(int fd)
 {
-    t_fdf_data  *data;
+    t_mesh  *data;
     char        *line;
     char        **points;
     int         x;
@@ -35,10 +35,13 @@ t_fdf_data  *read_fdf(int fd)
         while (points[x])
         {
             add_point(data, mk_fdf_point(x, y, points[x]));
+            data->cols = ft_maxi(x, data->cols);
             x++;
         }
+        data->rows = ft_maxi(y, data->rows);
         y++;
     }
+    printf("W: %i\t H: %i\n", data->cols, data->rows);
     return (data);
 }
 
