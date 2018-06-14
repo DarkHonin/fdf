@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 08:52:24 by wgourley          #+#    #+#             */
-/*   Updated: 2018/06/11 14:53:02 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/06/14 08:11:58 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,14 @@ void	die()
 	mlx_destroy_window(WINDOW->context, WINDOW->window);
 	free(WINDOW);
 	exit(1);
+}
+
+t_window	*open_window(int w, int h, char *title)
+{
+	t_window *window;
+
+	window = (t_window *)ft_memalloc(sizeof(t_window));
+	window->context = mlx_init();
+	window->window = mlx_new_window(window->context, w, h, title);
+	return (window);
 }

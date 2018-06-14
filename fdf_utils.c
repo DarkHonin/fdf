@@ -5,37 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/10 13:26:17 by wgourley          #+#    #+#             */
-/*   Updated: 2018/06/11 14:24:56 by wgourley         ###   ########.fr       */
+/*   Created: 2018/06/14 09:03:24 by wgourley          #+#    #+#             */
+/*   Updated: 2018/06/14 14:51:21 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	print_fdf(t_mesh *dat)
+
+void	print_point(t_point a)
 {
-	t_point *point;
-	
-	ft_putendl("Dumping fdf object");
-	ft_buffreset(dat->point_buffer);
-	while (GET_POINT(dat, point))
-	{
-		if (point->x == 0)
-			ft_putendl("");
-		ft_putstr(print_fdf_point(point));
-	}
+	ft_putchar('{');
+	ft_putnbr(a[0]);
+	ft_putchar(':');
+	ft_putnbr(a[1]);
+	ft_putchar(':');
+	ft_putnbr(a[2]);
+	ft_putchar('}');
 }
 
-char	*print_fdf_point(t_point *pnt)
+t_point	*pov_mod(t_point a, t_point b)
 {
-	char *q;
-	q = ft_strnew(0);
-	ft_strcat(q, "{");
-	ft_strcat(q, ft_itoa(pnt->x));
-	ft_strcat(q, ":");
-	ft_strcat(q, ft_itoa(pnt->y));
-	ft_strcat(q, ":");
-	ft_strcat(q, ft_itoa(pnt->z));
-	ft_strcat(q, "}");
-	return (q);
+	t_point *ret;
+	ret = (t_point *)ft_memalloc(sizeof(t_point));
+	(*ret)[0] = (cos(DEG_RAD(b[0])) * a[0]) - (sin(DEG_RAD(b[0])) * ((a[2] / 10) * 50));
+	(*ret)[1] = (sin(DEG_RAD(b[1])) * a[1]) - (cos(DEG_RAD(b[1])) * ((a[2] / 10) * 50));
+	(*ret)[2] = a[2];
+	return (ret);
 }
