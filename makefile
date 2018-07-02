@@ -7,7 +7,7 @@ FTLIB=$(INCLUDE)/libft.a
 FLAGS=-lft -lmlx -framework OpenGL -framework AppKit
 
 test: $(FTLIB) $(MNXL)
-	gcc *.c $(GNL)/*.c -I $(INCLUDE) -I $(MINILIBX) -L $(INCLUDE) -L $(MINILIBX) -I $(GNL)/ $(FLAGS)
+	gcc *.c $(GNL)/*.c $(FTLIB) -I$(INCLUDE) -I $(MINILIBX) -L $(INCLUDE) -L $(MINILIBX) -I $(GNL)/ $(FLAGS)
 
 $(FTLIB):
 	make -C $(INCLUDE)
