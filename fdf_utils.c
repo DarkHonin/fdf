@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 09:03:24 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/02 12:54:35 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/03 14:14:49 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ t_point	*pov_mod(t_point *a, t_point *b)
 	double bx;
 	double by;
 
-	
 	bx = cos(DEG_RAD(b->x));
 	by = sin(DEG_RAD(b->y));
-	zx = cos(DEG_RAD(b->y)) * (a->z / 10);
-	zy = sin(DEG_RAD(b->x)) * (a->z / 10);
+	zx = (a->z / 10) * cos(DEG_RAD(b->y));
+	zy = (a->z / 10) * sin(DEG_RAD(b->x));
 	spread = (MESH_SPREAD * b->z);
-	a->x = (bx * (a->x * spread)) + (zy * spread) - ((a->y * (b->x)) * cos(DEG_RAD(b->y)));
+	a->x = (bx * (a->x * spread)) + (zy * spread) - (((b->x / 360) * MESH_SPREAD * a->y) * cos(DEG_RAD(b->y)));
 	a->y = (by * (a->y * spread)) + (zx * spread);
 	return (a);
 }
@@ -66,4 +65,9 @@ t_point	*pos_mod(t_point *a, t_point *b)
 	ret->x += (b->x);
 	ret->y += (b->y);
 	return (ret);
+}
+
+t_point *clone_point(t_point *e)
+{
+	return (new_point(e->x, e->y, e->z));
 }

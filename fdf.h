@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:40 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/02 11:00:02 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/03 14:33:45 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 # define KEY_PLUS 69
 # define KEY_MINUS 78
 # define DEG_RAD(x) ((x * M_PI) / 180)
-# define POV (t_point){300, 300, 0}
-# define LINE_RESOLUTION 1
+# define LINE_RESOLUTION 2
 
 # define WINDOW __window()
 
@@ -32,6 +31,7 @@
 #include <stdio.h>
 #include "get_next_line.h"
 #include "mlx.h"
+#include <stdlib.h>
 
 
 typedef struct 	s_point3
@@ -62,8 +62,9 @@ void		draw_line(t_point *a, t_point *b);
 void		draw_rect(t_point *a, t_point *b, t_point *c, t_point *d);
 void		die();
 void		print_point(t_point *a);
-char	*point_to_str(t_point *a);
+char		*point_to_str(t_point *a);
 t_point		*pov_mod(t_point *a, t_point *b);
 t_point		*pos_mod(t_point *a, t_point *b);
 t_mesh		*read_fdf(int fd);
+t_point		*clone_point(t_point *e);
 #endif
