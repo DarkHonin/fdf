@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:06:21 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/03 15:13:58 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/06 12:16:25 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,95 +14,84 @@
 #include <fcntl.h>
 #include <math.h>
 
-static t_point *pov = NULL;
-static t_point *pos = NULL;
-static int redraw = 1;
+static t_point *g_pov = NULL;
+static t_point *g_pos = NULL;
+static int g_redraw = 1;
 
-t_point *mod_ndraw(t_point *pnt)
+t_point			*mod_ndraw(t_point *pnt)
 {
 	t_point *e;
 
 	e = clone_point(pnt);
-	pov_mod(e, pov);
-	pos_mod(e, pos);
+	pov_mod(e, g_pov);
+	pos_mod(e, g_pos);
 	draw_point(e);
 	return (e);
 }
 
-void draw_mesh(t_mesh data)
+static int		loop(t_mesh data)
 {
+	t_point *pnt;
 	t_point *hold;
-	t_point *asside;
-	int x;
-	int y;
+	t_vector	l;
+	t_vector	ll;
 
-	y = 0;
-	while (data[y])
-	{
-		x = 0;
-		while ((hold = data[y][x]))
-		{
-			hold = mod_ndraw(data[y][x]);
-			if (x > 0)
-			{
-				asside = mod_ndraw(data[y][x - 1]);
-				draw_line(hold, asside);
-				free(asside);
-			}
-			if (y > 0)
-			{
-				asside = mod_ndraw(data[y - 1][x]);
-				draw_line(hold, asside);
-				free(asside);
-			}
-			free(hold);
-			x++;
-		}
-		y++;
-	}
-}
-
-static int     loop(t_mesh data)
-{
-	if (pov == NULL)
-		pov = new_point(15, 45, 0.1);
-	if (pos == NULL)
-		pos = new_point(500, 500, 0);
-	if (redraw)
+	if (g_redraw)
 	{
 		mlx_clear_window(WINDOW->context, WINDOW->window);
-		draw_mesh(data);
+		ft_buffreset(data);
+		while ((l = vect_get_next(data)))
+		{
+			ft_buffreset(l);
+			while ((pnt = vect_get_next(l)))
+			{
+				hold = mod_ndraw(pnt);
+				if (pnt->x > 0)
+					draw_line(hold, mod_ndraw(vect_get_shallow(l, pnt->x - 1)));
+				if (pnt->y > 0)
+					draw_line(hold, mod_ndraw(vect_get_shallow(ll, pnt->x)));
+				free(hold);
+			}
+			ll = l;
+		}
 	}
-	redraw = 0;
+	g_redraw = 0;
 	return (1);
 }
 
-static int key_hook(int keycode, void *args)
+static int		key_hook(int keycode, void *args)
 {
 	if (keycode == KEY_ESC)
 		die();
-	pov->y = (int)(pov->y + (keycode == KEY_DOWN) * 5);
-	pov->y = (int)(pov->y - (keycode == KEY_UP) * 5);
-	pov->x = (int)(pov->x + ((keycode == KEY_LEFT) * 5));
-	pov->x -= (keycode == KEY_RIGHT) * 5;
-	pov->z += (keycode == KEY_PLUS) * .1;
-	pov->z -= (keycode == KEY_MINUS) * .1;
-	redraw = 1;
+	g_pov->y = (int)(g_pov->y + (keycode == KEY_DOWN) * 5);
+	g_pov->y = (int)(g_pov->y - (keycode == KEY_UP) * 5);
+	g_pov->x = (int)(g_pov->x + ((keycode == KEY_LEFT) * 5));
+	g_pov->x -= (keycode == KEY_RIGHT) * 5;
+	g_pov->z += (keycode == KEY_PLUS) * .1;
+	g_pov->z -= (keycode == KEY_MINUS) * .1;
+	g_pos->x -= (keycode == KEY_A) * 5;
+	g_pos->y -= (keycode == KEY_W) * 5;
+	g_pos->y += (keycode == KEY_S) * 5;
+	g_pos->x += (keycode == KEY_D) * 5;
+	g_redraw = 1;
 	return (0);
 }
 
-int main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
-	char *filename;
-	int   fd;
-	t_mesh	*data;
-	t_point *hold;
+	char	*filename;
+	int		fd;
+	t_mesh	data;
+	t_point	*hold;
 
 	if (argc < 2)
 		return (-1);
+	if (g_pov == NULL || g_pos == NULL)
+	{
+		g_pov = new_point(15, 45, 0.1);
+		g_pos = new_point(500, 500, 0);
+	}
 	filename = argv[argc - 1];
-
-	printf("Filename: %s\n", filename);
 	fd = open(filename, O_RDONLY);
 	data = read_fdf(fd);
 	mlx_hook(WINDOW->window, 2, 0L, &key_hook, NULL);

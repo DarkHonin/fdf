@@ -1,19 +1,25 @@
-GNL=gnl
-INCLUDE=libft
-MINILIBX=minilibx/
-MNXL=$(MINILIBX)/libmlx.a
-FTLIB=$(INCLUDE)/libft.a
+GNL:=$(realpath gnl)
+LIBFT:=$(realpath libft)
+MINILIBX:=$(realpath minilibx)
+VECT:=$(realpath vect_ft)
 
-FLAGS=-lft -lmlx -framework OpenGL -framework AppKit
+LIBS:= "$(GNL)" "$(LIBFT)" "$(MINILIBX)" "$(VECT)"
 
-test: $(FTLIB) $(MNXL)
-	gcc *.c $(GNL)/*.c $(FTLIB) -I$(INCLUDE) -I $(MINILIBX) -L $(INCLUDE) -L $(MINILIBX) -I $(GNL)/ $(FLAGS)
+INCLUDE:=$(addprefix -I, $(LIBS))
+LIB_INCLUDE:=$(addprefix -L, $(LIBS))
 
-$(FTLIB):
-	make -C $(INCLUDE)
+FLAGS=-lft -lmlx -lgnl -lvect -framework OpenGL -framework AppKit
 
-$(MNXL):
-	make -C $(MINILIBX)
+make:
+	gcc main.c fdf*.c $(INCLUDE) $(LIB_INCLUDE) $(FLAGS) -v
+
+build:
+	@for i in $(LIBS); do \
+		echo "Making $$i";	\
+		make -C $$i $(CMD) LIBFT='$(LIBFT)'; \
+	done
+
+re: fclean make
 
 retest:
 	$(MAKE) fclean
@@ -21,4 +27,4 @@ retest:
 	
 
 fclean:
-	make fclean -C $(INCLUDE)
+	make -C $(INCLUDE)

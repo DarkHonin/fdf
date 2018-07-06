@@ -6,12 +6,11 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 09:03:24 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/03 14:14:49 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/06 13:05:43 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
 
 void	print_point(t_point *a)
 {
@@ -40,7 +39,7 @@ char	*point_to_str(t_point *a)
 }
 
 t_point	*pov_mod(t_point *a, t_point *b)
-{		
+{
 	double zx;
 	double zy;
 	double spread;
@@ -52,14 +51,15 @@ t_point	*pov_mod(t_point *a, t_point *b)
 	zx = (a->z / 10) * cos(DEG_RAD(b->y));
 	zy = (a->z / 10) * sin(DEG_RAD(b->x));
 	spread = (MESH_SPREAD * b->z);
-	a->x = (bx * (a->x * spread)) + (zy * spread) - (((b->x / 360) * MESH_SPREAD * a->y) * cos(DEG_RAD(b->y)));
+	a->x = (bx * (a->x * spread)) + (zy * spread) -
+	(((b->x / 360) * MESH_SPREAD * a->y) * cos(DEG_RAD(b->y)));
 	a->y = (by * (a->y * spread)) + (zx * spread);
 	return (a);
 }
 
 t_point	*pos_mod(t_point *a, t_point *b)
 {
-	t_point *ret;
+	t_point	*ret;
 
 	ret = a;
 	ret->x += (b->x);
@@ -67,7 +67,7 @@ t_point	*pos_mod(t_point *a, t_point *b)
 	return (ret);
 }
 
-t_point *clone_point(t_point *e)
+t_point	*clone_point(t_point *e)
 {
 	return (new_point(e->x, e->y, e->z));
 }

@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:40 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/03 14:33:45 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/06 12:22:00 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,19 @@
 # define KEY_RIGHT 124
 # define MESH_SPREAD 10
 # define KEY_PLUS 69
+# define KEY_A 0
+# define KEY_W 13
+# define KEY_S 1
+# define KEY_D 2
 # define KEY_MINUS 78
 # define DEG_RAD(x) ((x * M_PI) / 180)
-# define LINE_RESOLUTION 2
+# define LINE_RESOLUTION 1
 
-# define WINDOW __window()
+# define WINDOW mkwindow()
 
 #include <math.h>
-#include "libft.h"
+#include <libft.h>
+#include <vect_ft.h>
 #include <stdio.h>
 #include "get_next_line.h"
 #include "mlx.h"
@@ -41,7 +46,7 @@ typedef struct 	s_point3
 	double z;
 }				t_point;
 
-typedef t_point ***t_mesh;
+typedef t_vector t_mesh;
 
 typedef struct	s_fdf_window
 {
@@ -50,7 +55,7 @@ typedef struct	s_fdf_window
 }	t_window;
 
 
-t_window	*__window();
+t_window	*mkwindow();
 t_window	*open_window(int w, int h, char *title);
 t_point 	*new_point(double x, double y, double z);
 t_mesh		*new_mesh();
@@ -65,6 +70,6 @@ void		print_point(t_point *a);
 char		*point_to_str(t_point *a);
 t_point		*pov_mod(t_point *a, t_point *b);
 t_point		*pos_mod(t_point *a, t_point *b);
-t_mesh		*read_fdf(int fd);
+t_mesh		read_fdf(int fd);
 t_point		*clone_point(t_point *e);
 #endif
