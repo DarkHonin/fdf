@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:40 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/06 12:22:00 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/06 13:32:05 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ typedef struct	s_fdf_window
 t_window	*mkwindow();
 t_window	*open_window(int w, int h, char *title);
 t_point 	*new_point(double x, double y, double z);
-t_mesh		*new_mesh();
-t_mesh  	*add_point(t_mesh *m, t_point *p);
-t_point		*get_point(t_mesh *m, unsigned int index);
 t_point		*get_next_point(t_mesh *m);
 void		draw_point(t_point *a);
 void		draw_line(t_point *a, t_point *b);
