@@ -6,14 +6,13 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 07:50:59 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/06 12:37:51 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/07 09:11:20 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "get_next_line.h"
 #include <fcntl.h>
-
 
 t_mesh read_fdf(int fd)
 {

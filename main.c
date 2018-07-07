@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:06:21 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/06 12:16:25 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/07 09:02:44 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int				main(int argc, char **argv)
 	char	*filename;
 	int		fd;
 	t_mesh	data;
-	t_point	*hold;
+	t_vector line;
+	t_point	*q;
 
 	if (argc < 2)
 		return (-1);
@@ -94,6 +95,14 @@ int				main(int argc, char **argv)
 	filename = argv[argc - 1];
 	fd = open(filename, O_RDONLY);
 	data = read_fdf(fd);
+	ft_buffreset(data);
+	while ((line = vect_get_next(data)))
+	{
+		ft_buffreset(line);
+		printf("%p", line);
+		while ((q = vect_get_next(line)))
+			printf("%s",point_to_str(q));
+	}
 	mlx_hook(WINDOW->window, 2, 0L, &key_hook, NULL);
 	mlx_loop_hook(WINDOW->context, &loop, data);
 	mlx_loop(WINDOW->context);
