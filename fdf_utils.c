@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 09:03:24 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/06 13:05:43 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/07 14:44:44 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,37 @@ char	*point_to_str(t_point *a)
 	return (ret);
 }
 
-t_point	*pov_mod(t_point *a, t_point *b)
+t_point	*pov_mod(t_point *a, t_mesh *b)
 {
-	double zx;
-	double zy;
-	double spread;
-	double bx;
-	double by;
+	double r;
+	double rotx;
+	double roty;
 
-	bx = cos(DEG_RAD(b->x));
-	by = sin(DEG_RAD(b->y));
-	zx = (a->z / 10) * cos(DEG_RAD(b->y));
-	zy = (a->z / 10) * sin(DEG_RAD(b->x));
-	spread = (MESH_SPREAD * b->z);
-	a->x = (bx * (a->x * spread)) + (zy * spread) -
-	(((b->x / 360) * MESH_SPREAD * a->y) * cos(DEG_RAD(b->y)));
-	a->y = (by * (a->y * spread)) + (zx * spread);
+	a->x *= MESH_SPREAD * b->scale;
+	a->y *= MESH_SPREAD * b->scale;
+	r = sqrt(pow(a->y, 2) + pow(a->x, 2));
+	rotx = 0;
+	if (a->y != 0)
+		rotx = atan(a->x / a->y) + DEG_RAD(b->pov->x);
+	else
+		rotx = atan(a->x) + DEG_RAD(b->pov->x);
+	a->x = r * cos(rotx);
+	a->y = r * sin(rotx);
+
+	roty = atan(a->x / a->z) + DEG_RAD(b->pov->y);
+	r = sqrt(pow(a->z, 2) + pow(a->x, 2));
+	a->x = r * cos(roty);
+	a->y = r * sin(roty);
 	return (a);
 }
 
-t_point	*pos_mod(t_point *a, t_point *b)
+t_point	*pos_mod(t_point *a, t_mesh *b)
 {
 	t_point	*ret;
 
 	ret = a;
-	ret->x += (b->x);
-	ret->y += (b->y);
+	ret->x += 500;
+	ret->y += 500;
 	return (ret);
 }
 

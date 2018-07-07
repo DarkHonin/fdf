@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 07:50:59 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/07 09:11:20 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/07 14:27:06 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,46 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 
-t_mesh read_fdf(int fd)
+static void itter_node_vertex(t_vector a, t_point *b)
+{
+	print_point(b);
+	ft_putendl("");
+}
+
+static void itter_node_lines(t_vector a, t_vector b)
+{
+	ft_putendl("------------");
+	ft_putstr(ft_itoa_b(((int)b >> 4) & 0xffffffff, 16));
+	ft_putendl("\n----------------");
+	vect_itter(b, &itter_node_vertex);
+}
+
+
+static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
+{
+	t_mesh	*ret;
+
+	ret = (t_mesh *)ft_memalloc(sizeof(t_mesh));
+	ret->nodes = *nodes;
+	ret->dimentions = *dimentions;
+	ret->center = new_point(((*dimentions)->x/2),((*dimentions)->y/2), ((*dimentions)->z/2));
+	ret->pov = new_point(0,0,0);
+	ret->scale = 1;
+	ft_putstr("Mesh dimentions: ");
+	print_point(*dimentions);
+	ft_putendl("");
+	ft_putstr("Mesh center: ");
+	print_point(ret->center);
+	ft_putendl("");
+	vect_itter(*nodes, &itter_node_lines);
+	return (ret);
+}
+
+t_mesh 			*read_fdf(int fd)
 {
 	char *line;
 	char **parts;
-	t_mesh ret;
+	t_vector ret;
 	t_vector vline;
 	t_point *index;
 
@@ -34,11 +69,12 @@ t_mesh read_fdf(int fd)
 		index->x = 0;
 		while (parts[(int)index->x])
 		{
+			index->z = ft_maxi(ft_atoi(parts[(int)index->x]), index->z);
 			vect_push(vline, new_point(index->x, index->y, ft_atoi(parts[(int)index->x])));
 			index->x++;
 		}
 		vect_push(ret, vline);
 		index->y++;
 	}
-	return (ret);
+	return (make_mesh(&ret, &index));
 }

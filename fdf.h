@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:40 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/06 13:32:05 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/07 14:40:18 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define KEY_D 2
 # define KEY_MINUS 78
 # define DEG_RAD(x) ((x * M_PI) / 180)
-# define LINE_RESOLUTION 1
+# define RAD_DEG(x) ((x * 180) / M_PI)
+# define LINE_RESOLUTION 2
 
 # define WINDOW mkwindow()
 
@@ -46,7 +47,14 @@ typedef struct 	s_point3
 	double z;
 }				t_point;
 
-typedef t_vector t_mesh;
+typedef struct	s_mesh
+{
+	t_vector	nodes;
+	t_point		*center;
+	t_point		*pov;
+	t_point		*dimentions;
+	double		scale;
+}				t_mesh;
 
 typedef struct	s_fdf_window
 {
@@ -65,8 +73,8 @@ void		draw_rect(t_point *a, t_point *b, t_point *c, t_point *d);
 void		die();
 void		print_point(t_point *a);
 char		*point_to_str(t_point *a);
-t_point		*pov_mod(t_point *a, t_point *b);
-t_point		*pos_mod(t_point *a, t_point *b);
-t_mesh		read_fdf(int fd);
+t_point		*pov_mod(t_point *a, t_mesh *b);
+t_point		*pos_mod(t_point *a, t_mesh *b);
+t_mesh		*read_fdf(int fd);
 t_point		*clone_point(t_point *e);
 #endif
