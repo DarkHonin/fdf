@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:06:21 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/07 12:40:11 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/10 12:14:21 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,8 @@ static int		key_hook(int keycode, t_mesh *mesh)
 	mesh->pov->y = (int)(mesh->pov->y - (keycode == KEY_UP) * 5);
 	mesh->pov->x = (int)(mesh->pov->x + ((keycode == KEY_LEFT) * 5));
 	mesh->pov->x -= (keycode == KEY_RIGHT) * 5;
-	mesh->scale += (keycode == KEY_PLUS) * .1;
-	mesh->scale -= (keycode == KEY_MINUS) * .1;
-	g_pos->x -= (keycode == KEY_A) * 5;
-	g_pos->y -= (keycode == KEY_W) * 5;
-	g_pos->y += (keycode == KEY_S) * 5;
-	g_pos->x += (keycode == KEY_D) * 5;
+	mesh->scale *= (keycode == KEY_PLUS) ? 2 : 1;
+	mesh->scale *= (keycode == KEY_MINUS) ? 0.5 : 1;
 	g_redraw = 1;
 	return (0);
 }

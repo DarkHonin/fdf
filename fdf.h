@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:40 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/07 14:40:18 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/10 12:12:15 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 # define KEY_MINUS 78
 # define DEG_RAD(x) ((x * M_PI) / 180)
 # define RAD_DEG(x) ((x * 180) / M_PI)
-# define LINE_RESOLUTION 2
+# define LINE_RESOLUTION 1
+# define DEPTH 10
 
 # define WINDOW mkwindow()
 
@@ -42,9 +43,9 @@
 
 typedef struct 	s_point3
 {
-	double x;
-	double y;
-	double z;
+	float x;
+	float y;
+	float z;
 }				t_point;
 
 typedef struct	s_mesh
@@ -65,7 +66,7 @@ typedef struct	s_fdf_window
 
 t_window	*mkwindow();
 t_window	*open_window(int w, int h, char *title);
-t_point 	*new_point(double x, double y, double z);
+t_point 	*new_point(float x, float y, float z);
 t_point		*get_next_point(t_mesh *m);
 void		draw_point(t_point *a);
 void		draw_line(t_point *a, t_point *b);

@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 07:50:59 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/08 10:55:11 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/10 12:11:38 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 	ret = (t_mesh *)ft_memalloc(sizeof(t_mesh));
 	ret->nodes = *nodes;
 	ret->dimentions = *dimentions;
-	ret->center = new_point(((*dimentions)->x/2),((*dimentions)->y/2), ((*dimentions)->z/2));
-	ret->pov = new_point(45,45,0);
+	ret->center = new_point((((*dimentions)->x - 1)/2),(((*dimentions)->y - 1)/2), (((*dimentions)->z - 1)/2));
+	ret->pov = new_point(0,0,0);
 	ret->scale = 1;
 	ft_putstr("Mesh dimentions: ");
 	print_point(*dimentions);

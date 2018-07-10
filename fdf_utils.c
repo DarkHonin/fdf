@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 09:03:24 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/08 12:24:33 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/10 12:11:06 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,40 +40,33 @@ char	*point_to_str(t_point *a)
 
 t_point	*pov_mod(t_point *a, t_mesh *b)
 {
-	double r;
-	double rotx;
 	double x;
 	double y;
+	double z;
 
-	a->x *= MESH_SPREAD * b->scale;
-	a->y *= MESH_SPREAD * b->scale;
-	a->x -= b->center->x * MESH_SPREAD;
-	
-	// on x axis
-	r = sqrt(pow(a->y, 2) + pow(a->x, 2));
-	if (y != 0)
-		rotx = atan(a->x / a->y) + DEG_RAD(b->pov->x);
-	else
-		rotx = atan(x) + DEG_RAD(b->pov->x);
-	a->x = r * cos(rotx);
-	a->y = r * sin(rotx);
-	
-	// on y axis z = x
-	r = sqrt(pow(a->y, 2) + pow(a->z, 2));
-	rotx = atan(a->y / a->z) + DEG_RAD(b->pov->y);
-	a->x += r * cos(rotx);
-	a->y += r * sin(rotx);
+	x = a->x - b->center->x;
+	y = a->y - b->center->y;
+	z = (a->z + ((a->z == 0))) + DEPTH;// - b->center->z;
+	a->x = x * (z);
+	a->y = y * (z);
+	a->z = z;
+
 	return (a);
 }
 
 t_point	*pos_mod(t_point *a, t_mesh *b)
 {
-	t_point	*ret;
+	double x;
+	double y;
+	double z;
 
-	ret = a;
-	ret->x += 500;
-	ret->y += 500;
-	return (ret);
+	x = 500 + (a->x * (MESH_SPREAD * b->scale));
+	y = 500 + (a->y * (MESH_SPREAD * b->scale));
+	//mlx_string_put(WINDOW->context, WINDOW->window, x, y, 0xFFFFFF, point_to_str(a));
+	a->x = x;
+	a->y = y;
+	//mlx_string_put(WINDOW->context, WINDOW->window, x, y, 0xFFFFFF, point_to_str(a));
+	return (a);
 }
 
 t_point	*clone_point(t_point *e)

@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 08:05:27 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/06 11:59:40 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/10 11:44:49 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	draw_point(t_point *a)
 	int color;
 
 	base = (int)(((a->z + 1) / 11) * 0x0000FFFF);
-	color = base | 0x00000000;
+	color = base | 0x00F00000;
 	mlx_pixel_put(WINDOW->context, WINDOW->window, a->x, a->y, color);
 }
 

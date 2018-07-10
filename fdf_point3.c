@@ -6,13 +6,13 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 08:24:10 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/06 10:12:28 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/10 11:00:15 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_point	*new_point(double x, double y, double z)
+t_point	*new_point(float x, float y, float z)
 {
 	t_point *ret;
 
