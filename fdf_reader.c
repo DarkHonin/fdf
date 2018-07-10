@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 07:50:59 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/10 12:11:38 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/10 14:47:59 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 
-static void itter_node_vertex(t_vector a, t_point *b)
+static void		itter_node_vertex(t_vector a, t_point *b)
 {
 	print_point(b);
 	ft_putendl("");
 }
 
-static void itter_node_lines(t_vector a, t_vector b)
+static void		itter_node_lines(t_vector a, t_vector b)
 {
 	ft_putendl("------------");
 	ft_putstr(ft_itoa_b(((int)b >> 4) & 0xffffffff, 16));
 	ft_putendl("\n----------------");
 	vect_itter(b, &itter_node_vertex);
 }
-
 
 static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 {
@@ -36,9 +35,10 @@ static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 	ret = (t_mesh *)ft_memalloc(sizeof(t_mesh));
 	ret->nodes = *nodes;
 	ret->dimentions = *dimentions;
-	ret->center = new_point((((*dimentions)->x - 1)/2),(((*dimentions)->y - 1)/2), (((*dimentions)->z - 1)/2));
-	ret->pov = new_point(0,0,0);
-	ret->scale = 1;
+	ret->center = new_point((((*dimentions)->x - 1) / 2),
+	(((*dimentions)->y - 1) / 2), (((*dimentions)->z - 1) / 2));
+	ret->pov = new_point(INIT_X, INIT_Y, INIT_Z);
+	ret->scale = INIT_SCALE;
 	ft_putstr("Mesh dimentions: ");
 	print_point(*dimentions);
 	ft_putendl("");
@@ -49,29 +49,26 @@ static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 	return (ret);
 }
 
-t_mesh 			*read_fdf(int fd)
+t_mesh			*read_fdf(int fd)
 {
-	char *line;
-	char **parts;
-	t_vector ret;
-	t_vector vline;
-	t_point *index;
+	char		*line;
+	char		**parts;
+	t_vector	ret;
+	t_vector	vline;
+	t_point		*index;
 
 	ret = MAKE_VECT(sizeof(t_buff));
-	index = new_point(0,0,0);
-	ft_putendl("Reading file");
+	index = new_point(0, 0, 0);
 	while (get_next_line(fd, &line))
 	{
-		ft_putstr(">> ");
-		ft_putendl(line);
 		parts = ft_strsplit(line, ' ');
 		vline = MAKE_VECT(sizeof(t_point));
 		index->x = 0;
 		while (parts[(int)index->x])
 		{
 			index->z = ft_maxi(ft_atoi(parts[(int)index->x]), index->z);
-			vect_push(vline, new_point(index->x, index->y, ft_atoi(parts[(int)index->x])));
-			index->x++;
+			vect_push(vline, new_point(index->x, index->y,
+			ft_atoi(parts[(int)index->x++])));
 		}
 		vect_push(ret, vline);
 		index->y++;

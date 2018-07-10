@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:06:21 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/10 12:14:21 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/10 14:55:28 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <fcntl.h>
 #include <math.h>
 
-static t_point *g_pov = NULL;
-static t_point *g_pos = NULL;
 static int g_redraw = 1;
 
 t_point			*mod_ndraw(t_point *pnt, t_mesh *mesh)
@@ -29,31 +27,30 @@ t_point			*mod_ndraw(t_point *pnt, t_mesh *mesh)
 	return (e);
 }
 
-static int		loop(t_mesh *data)
+static int		loop(t_mesh *d)
 {
-	t_point *pnt;
-	t_point *hold;
+	t_point		*pnt;
+	t_point		*hold;
 	t_vector	l;
 	t_vector	ll;
 
-	if (g_redraw)
+	if (!g_redraw)
+		return (1);
+	mlx_clear_window(WINDOW->context, WINDOW->window);
+	ft_buffreset(d->nodes);
+	while ((l = vect_get_next(d->nodes)))
 	{
-		mlx_clear_window(WINDOW->context, WINDOW->window);
-		ft_buffreset(data->nodes);
-		while ((l = vect_get_next(data->nodes)))
+		ft_buffreset(l);
+		while ((pnt = vect_get_next(l)))
 		{
-			ft_buffreset(l);
-			while ((pnt = vect_get_next(l)))
-			{
-				hold = mod_ndraw(pnt, data);
-				if (pnt->x > 0)
-					draw_line(hold, mod_ndraw(vect_get_shallow(l, pnt->x - 1), data));
-				if (pnt->y > 0)
-					draw_line(hold, mod_ndraw(vect_get_shallow(ll, pnt->x), data));
-				free(hold);
-			}
-			ll = l;
+			hold = mod_ndraw(pnt, d);
+			if (pnt->x > 0)
+				draw_line(hold, mod_ndraw(vect_get_shallow(l, pnt->x - 1), d));
+			if (pnt->y > 0)
+				draw_line(hold, mod_ndraw(vect_get_shallow(ll, pnt->x), d));
+			free(hold);
 		}
+		ll = l;
 	}
 	g_redraw = 0;
 	return (1);
@@ -81,11 +78,6 @@ int				main(int argc, char **argv)
 
 	if (argc < 2)
 		return (-1);
-	if (g_pov == NULL || g_pos == NULL)
-	{
-		g_pov = new_point(15, 45, 0.1);
-		g_pos = new_point(500, 500, 0);
-	}
 	filename = argv[argc - 1];
 	fd = open(filename, O_RDONLY);
 	data = read_fdf(fd);
