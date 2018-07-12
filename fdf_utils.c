@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 09:03:24 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/12 13:34:09 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/12 16:00:59 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ t_point	*pov_mod(t_point *a, t_mesh *b)
 	x = a->x - b->center->x;
 	y = a->y - b->center->y;
 	z = (a->z + ((a->z == 0))) + DEPTH;
+	x = x * cos(DEG_RAD(b->pov->x));
+	y = y * sin(DEG_RAD(b->pov->x));
+
 	a->x = x * (z);
 	a->y = y * (z);
 	a->z = z;

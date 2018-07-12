@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 07:50:59 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/12 14:15:01 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/12 15:15:47 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@
 
 static void		itter_node_vertex(t_vector a, void *b)
 {
-	print_point(b);
+	t_point **p;
+
+	p = b;
+	print_point(*p);
 	ft_putendl("");
 }
 
 static void		itter_node_lines(t_vector a, void *b)
 {
+	t_vector **q = b;
 	ft_putendl("------------");
-	ft_putstr(ft_itoa_b(((int)b >> 4) & 0xffffffff, 16));
 	ft_putendl("\n----------------");
-	vect_itter(b, &itter_node_vertex);
+	vect_itter(*q, &itter_node_vertex);
 }
 
 static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
@@ -50,6 +53,14 @@ static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 	return (ret);
 }
 
+static void app_point(t_point *a, t_vector *ln)
+{
+	t_point *q;
+	q = clone_point(a);
+	free(a);
+	vect_push(*ln, &q);
+}
+
 t_mesh			*read_fdf(int fd)
 {
 	char		*line;
@@ -58,23 +69,25 @@ t_mesh			*read_fdf(int fd)
 	t_vector	vline;
 	t_point		*index;
 
-	ret = MAKE_VECT(sizeof(t_buff));
+	ret = MAKE_VECT(sizeof(t_buff *));
 	index = new_point(0, 0, 0);
 	while (get_next_line(fd, &line))
 	{
 		parts = ft_strsplit(line, ' ');
-		vline = MAKE_VECT(sizeof(t_point));
+		vline = MAKE_VECT(sizeof(t_point *));
 		index->x = 0;
 		while (parts[(int)index->x])
 		{
 			index->z = ft_maxi(ft_atoi(parts[(int)index->x]), index->z);
-			vect_push(vline, new_point(index->x, index->y,
-			ft_atoi(parts[(int)index->x++])));
+			app_point(new_point(index->x, index->y,
+			ft_atoi(parts[(int)index->x])), &vline);
+			free(parts[(int)index->x++]);
 		}
-		vect_push(ret, vline);
+		vect_push(ret, &vline);
 		index->y++;
 		free(parts);
 		free(line);
 	}
+	free(line);
 	return (make_mesh(&ret, &index));
 }

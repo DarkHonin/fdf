@@ -6,20 +6,21 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:06:21 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/12 14:20:12 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/12 15:14:57 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <fcntl.h>
 #include <math.h>
+#include <unistd.h>
 
 static int		loop(t_mesh *d)
 {
 	t_point		*pnt;
 	t_point		*hold;
-	t_vector	l;
-	t_vector	ll;
+	t_vector	*l;
+	t_vector	*ll;
 
 	if (d->redraw == 0)
 		return (1);
@@ -28,12 +29,11 @@ static int		loop(t_mesh *d)
 	ft_buffreset(d->nodes);
 	while ((l = vect_get_next(d->nodes)))
 	{
-		ft_buffreset(l);
-		draw_row(&l, &ll, d);
+		ft_buffreset(*l);
+		draw_row(l, ll, d);
 		ll = l;
 	}
 	d->redraw = 0;
-	ft_putendl("redraw\n");
 	mlx_put_image_to_window(WINDOW->context, WINDOW->window, IMAGE, 0, 0);
 	return (1);
 }
@@ -64,10 +64,6 @@ int				main(int argc, char **argv)
 	fd = open(filename, O_RDONLY);
 	data = read_fdf(fd);
 	close(fd);
-	while(1)
-	{
- 
-	}
 	mlx_hook(WINDOW->window, 2, 0L, &key_hook, data);
 	mlx_loop_hook(WINDOW->context, &loop, data);
 	mlx_loop(WINDOW->context);
