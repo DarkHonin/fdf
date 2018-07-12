@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 07:50:59 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/10 14:47:59 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/12 14:15:01 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 
-static void		itter_node_vertex(t_vector a, t_point *b)
+static void		itter_node_vertex(t_vector a, void *b)
 {
 	print_point(b);
 	ft_putendl("");
 }
 
-static void		itter_node_lines(t_vector a, t_vector b)
+static void		itter_node_lines(t_vector a, void *b)
 {
 	ft_putendl("------------");
 	ft_putstr(ft_itoa_b(((int)b >> 4) & 0xffffffff, 16));
@@ -39,6 +39,7 @@ static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 	(((*dimentions)->y - 1) / 2), (((*dimentions)->z - 1) / 2));
 	ret->pov = new_point(INIT_X, INIT_Y, INIT_Z);
 	ret->scale = INIT_SCALE;
+	ret->redraw = 1;
 	ft_putstr("Mesh dimentions: ");
 	print_point(*dimentions);
 	ft_putendl("");
@@ -72,6 +73,8 @@ t_mesh			*read_fdf(int fd)
 		}
 		vect_push(ret, vline);
 		index->y++;
+		free(parts);
+		free(line);
 	}
 	return (make_mesh(&ret, &index));
 }

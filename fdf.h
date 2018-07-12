@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:40 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/10 14:50:36 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/12 13:59:45 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # define INIT_SCALE 0.1
 
 # define WINDOW mkwindow()
+# define IMAGE get_image(0)
+# define CLEAR_IMAGE get_image(1)
 
 # include <math.h>
 # include <libft.h>
@@ -57,6 +59,7 @@ typedef struct	s_mesh
 	t_point		*center;
 	t_point		*pov;
 	t_point		*dimentions;
+	int			redraw;
 	double		scale;
 }				t_mesh;
 
@@ -72,7 +75,6 @@ t_point			*new_point(float x, float y, float z);
 t_point			*get_next_point(t_mesh *m);
 void			draw_point(t_point *a);
 void			draw_line(t_point *a, t_point *b);
-void			draw_rect(t_point *a, t_point *b, t_point *c, t_point *d);
 void			die();
 void			print_point(t_point *a);
 char			*point_to_str(t_point *a);
@@ -80,5 +82,7 @@ t_point			*pov_mod(t_point *a, t_mesh *b);
 t_point			*pos_mod(t_point *a, t_mesh *b);
 t_mesh			*read_fdf(int fd);
 t_point			*clone_point(t_point *e);
+void			*get_image(int clear);
+void			draw_row(t_vector *line, t_vector *last, t_mesh *d);
 
 #endif

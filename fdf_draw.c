@@ -6,22 +6,55 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 08:05:27 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/10 14:13:15 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/12 14:05:32 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
 
+static int get_color(double z)
+{
+	int ret;
+	int base;
+
+	ret = 0x00FF00FF;
+	base = 0x00FFFF00 * ((z) / 110);
+	ret |= base;
+	return (ret);
+}
+
 void	draw_point(t_point *a)
 {
-	int base;
-	int color;
+	int bpp;
+	int ll;
+	int end;
+	char *px;
+	int off;
 
-	base = (int)(((a->z + 1 - 100) / 11) * 0x0000FFFF);
-	color = base | 0x00FF0000;
-	mlx_pixel_put(WINDOW->context, WINDOW->window, a->x, a->y, color);
+	if (((int)a->x) >= 1000 || ((int)a->y )>= 1000 || ((int)a->x) <= 0 || a->y <= 0)
+		return ;
+	px = mlx_get_data_addr(IMAGE, &bpp, &ll, &end);
+	off = (((int)a->x) * (bpp / 8)) + (((int)a->y) * ll);
+	*((int *)(px + off)) = get_color(a->z);
 }
+
+
+void *get_image(int clear)
+{
+	static void *img = NULL;
+
+	if (clear)
+	{
+		if (img != NULL)
+			mlx_destroy_image(WINDOW->context, img);
+		img = NULL;
+	}
+	if (img == NULL)
+		img = mlx_new_image(WINDOW->context, 1000, 1000);
+	return (img);
+}
+
 
 void	draw_line(t_point *a, t_point *b)
 {
@@ -42,13 +75,6 @@ void	draw_line(t_point *a, t_point *b)
 		draw_point(pnt);
 		index += LINE_RESOLUTION;
 	}
-	free(b);
-}
-
-void	draw_rect(t_point *a, t_point *b, t_point *c, t_point *d)
-{
-	draw_line(a, b);
-	draw_line(b, c);
-	draw_line(c, d);
-	draw_line(d, a);
+	free(pnt);
+	free(delta);
 }
