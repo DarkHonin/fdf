@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:40 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/12 13:59:45 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/13 11:29:22 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # include <stdio.h>
 # include "get_next_line.h"
 # include "mlx.h"
+# include <matrix_ft.h>
 # include <stdlib.h>
 
 typedef struct	s_point3
