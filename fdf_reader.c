@@ -6,30 +6,13 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 07:50:59 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/12 15:15:47 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/14 13:39:58 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "get_next_line.h"
 #include <fcntl.h>
-
-static void		itter_node_vertex(t_vector a, void *b)
-{
-	t_point **p;
-
-	p = b;
-	print_point(*p);
-	ft_putendl("");
-}
-
-static void		itter_node_lines(t_vector a, void *b)
-{
-	t_vector **q = b;
-	ft_putendl("------------");
-	ft_putendl("\n----------------");
-	vect_itter(*q, &itter_node_vertex);
-}
 
 static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 {
@@ -49,7 +32,6 @@ static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 	ft_putstr("Mesh center: ");
 	print_point(ret->center);
 	ft_putendl("");
-	vect_itter(*nodes, &itter_node_lines);
 	return (ret);
 }
 
@@ -78,9 +60,8 @@ t_mesh			*read_fdf(int fd)
 		index->x = 0;
 		while (parts[(int)index->x])
 		{
-			index->z = ft_maxi(ft_atoi(parts[(int)index->x]), index->z);
-			app_point(new_point(index->x, index->y,
-			ft_atoi(parts[(int)index->x])), &vline);
+			index->z = ft_atoi(parts[(int)index->x]);
+			app_point(clone_point(index), &vline);
 			free(parts[(int)index->x++]);
 		}
 		vect_push(ret, &vline);

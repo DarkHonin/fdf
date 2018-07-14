@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:15:40 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/13 11:29:22 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/14 13:15:45 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define DEG_RAD(x) ((x * M_PI) / 180)
 # define RAD_DEG(x) ((x * 180) / M_PI)
 # define LINE_RESOLUTION 1
-# define DEPTH 100
+# define DEPTH 200
 # define INIT_Z 0
 # define INIT_X 0
 # define INIT_Y 0
@@ -44,7 +44,6 @@
 # include <stdio.h>
 # include "get_next_line.h"
 # include "mlx.h"
-# include <matrix_ft.h>
 # include <stdlib.h>
 
 typedef struct	s_point3

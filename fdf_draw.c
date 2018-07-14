@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 08:05:27 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/12 14:05:32 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/14 13:28:06 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int get_color(double z)
 	int base;
 
 	ret = 0x00FF00FF;
-	base = 0x00FFFF00 * ((z) / 110);
+	base = 0x00FFFF00 * ((z) / (DEPTH + 10));
 	ret |= base;
 	return (ret);
 }

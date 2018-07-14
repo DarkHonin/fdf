@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:06:21 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/12 15:14:57 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/14 13:33:10 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ static int		key_hook(int keycode, t_mesh *mesh)
 {
 	if (keycode == KEY_ESC)
 		die();
-	mesh->pov->y = (int)(mesh->pov->y + (keycode == KEY_DOWN) * 5);
-	mesh->pov->y = (int)(mesh->pov->y - (keycode == KEY_UP) * 5);
-	mesh->pov->x = (int)(mesh->pov->x + ((keycode == KEY_LEFT) * 5));
-	mesh->pov->x -= (keycode == KEY_RIGHT) * 5;
+	mesh->center->x -= (keycode == KEY_RIGHT);
+	mesh->center->x += (keycode == KEY_LEFT);
+	mesh->center->y += (keycode == KEY_UP);
+	mesh->center->y -= (keycode == KEY_DOWN);
 	mesh->scale *= (keycode == KEY_PLUS) ? 2 : 1;
 	mesh->scale *= (keycode == KEY_MINUS) ? 0.5 : 1;
 	mesh->redraw = 1;

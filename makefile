@@ -14,6 +14,9 @@ FLAGS=-lft -lmlx -lgnl -lvect -lmatrix -framework OpenGL -framework AppKit
 make:
 	gcc main.c fdf*.c $(INCLUDE) $(LIB_INCLUDE) $(FLAGS) -o fdf.out
 
+db:
+	gcc main.c fdf*.c $(INCLUDE) $(LIB_INCLUDE) $(FLAGS) -c -o db
+
 build:
 	@for i in $(LIBS); do \
 		echo "Making $$i";	\
