@@ -6,14 +6,14 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 08:05:27 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/14 13:28:06 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/14 13:59:51 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
 
-static int get_color(double z)
+static int	get_color(double z)
 {
 	int ret;
 	int base;
@@ -24,23 +24,23 @@ static int get_color(double z)
 	return (ret);
 }
 
-void	draw_point(t_point *a)
+void		draw_point(t_point *a)
 {
-	int bpp;
-	int ll;
-	int end;
-	char *px;
-	int off;
+	int		bpp;
+	int		ll;
+	int		end;
+	char	*px;
+	int		off;
 
-	if (((int)a->x) >= 1000 || ((int)a->y )>= 1000 || ((int)a->x) <= 0 || a->y <= 0)
+	if (((int)a->x) >= 1000 || ((int)a->y) >= 1000 ||
+	((int)a->x) <= 0 || a->y <= 0)
 		return ;
 	px = mlx_get_data_addr(IMAGE, &bpp, &ll, &end);
 	off = (((int)a->x) * (bpp / 8)) + (((int)a->y) * ll);
 	*((int *)(px + off)) = get_color(a->z);
 }
 
-
-void *get_image(int clear)
+void		*get_image(int clear)
 {
 	static void *img = NULL;
 
@@ -55,8 +55,7 @@ void *get_image(int clear)
 	return (img);
 }
 
-
-void	draw_line(t_point *a, t_point *b)
+void		draw_line(t_point *a, t_point *b)
 {
 	t_point *delta;
 	double	index;

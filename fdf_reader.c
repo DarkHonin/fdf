@@ -6,13 +6,25 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 07:50:59 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/14 13:39:58 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/14 13:58:37 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "get_next_line.h"
 #include <fcntl.h>
+
+static void		check(t_vector a, void *b, void *m)
+{
+	t_vector **c;
+
+	c = b;
+	if (vect_len(*c) != ((t_point *)m)->x)
+	{
+		ft_putendl("Invalid file, row length invalid");
+		exit(0);
+	}
+}
 
 static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 {
@@ -32,12 +44,16 @@ static t_mesh	*make_mesh(t_vector *nodes, t_point **dimentions)
 	ft_putstr("Mesh center: ");
 	print_point(ret->center);
 	ft_putendl("");
+	ft_putstr("Validating...");
+	vect_itter(*nodes, *dimentions, &check);
+	ft_putendl("OK");
 	return (ret);
 }
 
-static void app_point(t_point *a, t_vector *ln)
+static void		app_point(t_point *a, t_vector *ln)
 {
 	t_point *q;
+
 	q = clone_point(a);
 	free(a);
 	vect_push(*ln, &q);
@@ -69,6 +85,5 @@ t_mesh			*read_fdf(int fd)
 		free(parts);
 		free(line);
 	}
-	free(line);
 	return (make_mesh(&ret, &index));
 }
