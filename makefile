@@ -1,33 +1,27 @@
-GNL:=$(realpath gnl)
-LIBFT:=$(realpath libft)
-MINILIBX:=$(realpath minilibx)
-VECT:=$(realpath vect_ft)
-MATRIX:=$(realpath matrix_ft)
+NAME=fdf
+LIBS=-L lib -L /goinfre/wgourley/.brew/Cellar/sdl2/2.0.8/lib
+INCLUDE=-I lib/includes
 
-LIBS:= "$(GNL)" "$(LIBFT)" "$(MINILIBX)" "$(VECT)" "$(MATRIX)"
+L= -lft -lmlx -lgnl -lmatrix -lvect -framework OpenGl -framework AppKit
 
-INCLUDE:=$(addprefix -I, $(LIBS))
-LIB_INCLUDE:=$(addprefix -L, $(LIBS))
+FILES:=$(basename $(shell find src -type f))
+OBJ:=$(foreach obj,$(notdir $(FILES)),$(addprefix obj/,$(addsuffix .o,$(obj))))
 
-FLAGS=-lft -lmlx -lgnl -lvect -lmatrix -framework OpenGL -framework AppKit
+GC=gcc
 
-SRC=main.c fdf_draw.c fdf_point3.c fdf_reader.c fdf_render.c fdf_utils.c fdf_window.c
+make: $(OBJ)
+	$(GC) -o $(NAME) $(OBJ) $(INCLUDE) $(LIBS) $(L)
 
-make:
-	gcc $(SRC) $(INCLUDE) $(LIB_INCLUDE) $(FLAGS) -o fdf.out
+$(OBJ):
+	mkdir -p obj
+	$(GC) $(shell find src -type f -name $(notdir $*).c) -o obj/$(notdir $*).o $(INCLUDE) -c 
 
-build:
-	@for i in $(LIBS); do \
-		echo "Making $$i";	\
-		make -C $$i $(CMD) LIBFT='$(LIBFT)'; \
-	done
+clean:
+	rm -f $(NAME)
+	rm -f $(OBJ)
 
-re: fclean make
+rebuild: clean
+	make -C dep CMD=re
+	$(MAKE) re
 
-retest:
-	$(MAKE) fclean
-	$(MAKE) test
-	
-
-fclean:
-	make -C $(INCLUDE)
+re: clean make
