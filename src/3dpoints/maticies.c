@@ -6,12 +6,11 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 18:15:44 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/23 12:44:05 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/24 12:08:03 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <fdf.h>
+#include <3d_point.h>
 #include <math.h>
 
 t_matrix *get_rot_matrix_x(float deg)

@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 09:03:24 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/23 13:03:45 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/24 09:55:49 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,28 @@ t_point3	*clone_point(t_point3 *clone)
 	Z(ret) = Z(clone);
 	return (ret);
 }
+
+
+
+t_point3_surface to_surface(t_vector *v, int x, int y)
+{
+	t_point3_surface	ret;
+	t_point3_surface	hold;
+	t_vector			**lines;
+	int					ind;
+	
+	ft_putstr("Converting to surface...");
+	ft_putnbr(vect_len(v));
+	ret = MAKE_EMPTY_SURFACE(DIMENTION(x, y));
+	lines = v->data;
+	ind = 0;
+	while (ind < vect_len(v))
+	{
+		ft_putstr(".");
+		ret[ind] = lines[ind]->data;
+		ind++;
+	}
+	ft_putendl("Done");
+	return (ret);
+}
+

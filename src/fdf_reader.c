@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/14 07:50:59 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/23 16:43:32 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/24 13:35:26 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,20 @@ static t_mesh	*make_mesh(t_vector *nodes, t_point3 **dimentions)
 	int			x;
 	t_vector	**lst;
 
+
+	ft_putstr("Validating...");
+	lst = vect_to_list(nodes);
+	while (x < vect_len(nodes))
+		check(lst[x++], *dimentions);
+	ft_putendl("OK");
 	x = 0;
 	ret = (t_mesh *)ft_memalloc(sizeof(t_mesh));
-	ret->nodes = nodes;
 	ret->dimentions = *dimentions;
-	ret->center = new_point(((X(ret->dimentions) - 1) / 2),
-	((Y(ret->dimentions) - 1) / 2), Z(ret->dimentions));
-	ret->pov = new_point(INIT_X, INIT_Y, INIT_Z);
+	Z(ret->dimentions) = 20;
+	ret->nodes = to_surface(nodes, X(ret->dimentions), Y(ret->dimentions));
+	ret->center = MAKE_POINT(((X(ret->dimentions) - 1) / 2),
+	((Y(ret->dimentions) - 1) / 2), ((X(ret->dimentions) - 1) / 2));
+	ret->pov = MAKE_POINT(INIT_X, INIT_Y, INIT_Z);
 	ret->scale = INIT_SCALE;
 	ret->redraw = 1;
 	ft_putstr("Mesh dimentions: ");
@@ -44,11 +51,6 @@ static t_mesh	*make_mesh(t_vector *nodes, t_point3 **dimentions)
 	ft_putstr("Mesh center: ");
 	print_point(ret->center);
 	ft_putendl(point_to_str(ret->center));
-	ft_putstr("Validating...");
-	lst = vect_to_list(nodes);
-	while (x < vect_len(nodes))
-		check(lst[x++], *dimentions);
-	ft_putendl("OK");
 	return (ret);
 }
 
@@ -69,7 +71,7 @@ t_mesh			*read_fdf(int fd)
 	t_point3	*index;
 
 	ret = MAKE_VECT(sizeof(t_vector *));
-	index = new_point(0, 0, 0);
+	index = MAKE_EMPTY_POINT;
 	while (get_next_line(fd, &line))
 	{
 		parts = ft_strsplit(line, ' ');
