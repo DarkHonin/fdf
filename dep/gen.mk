@@ -1,4 +1,5 @@
 include $(LIB_CFG)
+
 SRC_DIR=$(WORKING_DIR)/srcs
 OBJ_DIR=$(WORKING_DIR)/objs
 INCLUDE_DIR=$(WORKING_DIR)/includes
@@ -17,7 +18,7 @@ $(NAME): $(LIB_CFG)
 	$(MAKE) make
 
 $(OBJS): $(OBJ_DIR)
-	@echo "Creating: $(OBJ_DIR)/$@"
+	@echo "Creating: $@"
 	@gcc $(shell find $(SRC_DIR) -type f -name $(notdir $*)) -o $@ $(INCLUDE) -I $(INCLUDE_DIR) -c
 
 $(OBJ_DIR):

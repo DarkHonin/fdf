@@ -1,0 +1,15 @@
+[submodule "dep/LIBFT"]
+	path = dep/LIBFT
+	url = https://github.com/DarkHonin/LIBFT.git
+[submodule "dep/GNL_PlanB"]
+	path = dep/GNL_PlanB
+	url = https://github.com/DarkHonin/GNL_PlanB.git
+[submodule "dep/matrix_ft"]
+	path = dep/matrix_ft
+	url = https://github.com/DarkHonin/matrix_ft.git
+[submodule "dep/vect_ft"]
+	path = dep/vect_ft
+	url = https://github.com/DarkHonin/vect_ft.git
+[submodule "dep/3dft"]
+	path = dep/3dft
+	url = https://github.com/DarkHonin/3dft.git

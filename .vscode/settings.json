@@ -1,9 +1,6 @@
 {
-    "files.associations": {
-        "libft.h": "c",
-        "iterator": "c",
-        "string": "c",
-        "string_view": "c",
-        "iosfwd": "cpp"
-    }
+	"files.associations": {
+		"3dft.h": "c",
+		"matrix_ft.h": "c"
+	}
 }
