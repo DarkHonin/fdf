@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/27 11:56:58 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/27 11:57:50 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/27 12:19:22 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	init_error(char *msg)
 {
-	ft_putstr("Failed on init: ");
+	ft_putstr("\e[91mFailed on init:\e[0m ");
 	ft_putendl(msg);
 	exit(1);
 }

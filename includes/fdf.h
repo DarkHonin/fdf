@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/27 11:52:38 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/27 12:09:08 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/27 12:17:01 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_window
 }				t_window;
 
 void		init_error(char *msg);
+void		file_error(char *msg);
 t_window	*get_window();
 void		close_window();
 

@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   err_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/27 11:20:37 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/27 12:17:54 by wgourley         ###   ########.fr       */
+/*   Created: 2018/07/27 12:15:18 by wgourley          #+#    #+#             */
+/*   Updated: 2018/07/27 12:19:00 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
-#include <3dft.h>
+#include <stdlib.h>
 
-static int loop()
+void	file_error(char *msg)
 {
-	return (1);
-}
-
-static int keys(int keycode)
-{
-	if (keycode == KEY_ESC)
-		close_window();
-	return (1);
-}
-
-
-int main(int ac, char **av)
-{
-	if (ac != 2)
-		file_error("Invalid number of arguments");
-	mlx_hook(get_window()->window_pointer, 2, 0L, &keys, NULL);
-	mlx_loop_hook(get_window()->context, &loop, NULL);
-	mlx_loop(get_window()->context);
+	ft_putstr("\e[91mInvalid file:\e[0m ");
+	ft_putendl(msg);
+	exit(1);
 }
