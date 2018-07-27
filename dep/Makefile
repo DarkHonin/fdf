@@ -1,16 +1,10 @@
-
 include libs.mk  ../project.mk
-
+LIBDIR=$(realpath .)
 prep:
-	@for i in $(INCLUDE); do \
-		echo $$i; \
+	@for i in $(LIBRAIRIES); do \
+		echo "Making: $$i"; \
+		make -C $$i LIBDIR=$(LIBDIR) -s; \
 	done
-	@$(MAKE) make
-
-make: $(ARCHIVES)
-
-$(ARCHIVES):
-	@make -C $(dir $@) 
 
 fclean:
 	@echo -n "Cleaning"
@@ -21,10 +15,8 @@ fclean:
 	@echo Done
 
 re:
-	@echo -n "Cleaning"
+	@echo "Rebuilding..."
 	@for i in $(LIBRAIRIES); do \
-		make -C $$i fclean ;\
+		make -C $$i re LIBDIR=$(LIBDIR) -s ;\
 		echo -n "."; \
 	done
-	@echo Done
-	@$(MAKE) make

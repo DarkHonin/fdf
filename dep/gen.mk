@@ -10,6 +10,11 @@ OBJS:=$(foreach obj,$(notdir $(SRCS)),$(addprefix $(OBJ_DIR)/,$(addsuffix .o,$(o
 $(NAME): $(LIB_CFG)
 	@echo "Current_path: $(WORKING_DIR)"
 	@echo "Object path: $(OBJ_DIR)"
+	@echo "Config path: $(LIB_CFG)"
+	@echo -e "\e[32wWorking directory: \e[0: $(WORKING_DIR)"
+	@for i in $(INCLUDE); do \
+		echo "Librairy found: $$i"; \
+	done
 	@echo "Making $(NAME)"
 	@for i in $(SRCS); do \
 		echo "Discovered: $$i"; \
