@@ -4,4 +4,5 @@ include dep/gen.mk
 export NAME
 
 make: $(OBJS)
+	make -C dep
 	gcc -o $(NAME) $(OBJS) $(INCLUDE) $(addprefix -L,$(LIBRAIRIES)) -I$(INCLUDE_DIR) $(LINKS) -lmlx -framework OpenGl -framework AppKit

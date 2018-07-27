@@ -6,11 +6,12 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/27 11:52:23 by wgourley          #+#    #+#             */
-/*   Updated: 2018/07/27 12:10:46 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/07/27 12:45:44 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
+#include <stdlib.h>
 
 t_window	*get_window()
 {
@@ -32,4 +33,5 @@ void		close_window()
 {
 	mlx_destroy_window(get_window()->context,get_window()->window_pointer);
 	free(get_window());
+	exit(1);
 }
