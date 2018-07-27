@@ -45,12 +45,13 @@ static int keys(int keycode)
 void run()
 {
 	SDL_Event	e;
-	get_window();
+	SDL_Renderer *a = SDL_CreateRenderer(get_window()->window_pointer, 0, SDL_RENDERER_SOFTWARE);
 	while (1)
 	{
 		while (SDL_PollEvent(&e))
 			if (e.type == SDL_QUIT)
 				close_window();
+		SDL_RenderPresent(a);
 	}
 	
 }
