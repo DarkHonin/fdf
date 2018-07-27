@@ -13,6 +13,21 @@
 #include <fdf.h>
 #include <3dft.h>
 
+
+#ifdef MLX_H
+
+void run()
+{
+	char	*filename;
+
+	if (ac != 2)
+		file_error("Invalid number of arguments");
+	filename = av[1];
+	mlx_hook(get_window()->window_pointer, 2, 0L, &keys, NULL);
+	mlx_loop_hook(get_window()->context, &loop, NULL);
+	mlx_loop(get_window()->context);
+}
+
 static int loop()
 {
 	return (1);
@@ -24,16 +39,33 @@ static int keys(int keycode)
 		close_window();
 	return (1);
 }
+#endif
+#ifdef SDL_h_
+
+void run()
+{
+	SDL_Event	e;
+	get_window();
+	while (1)
+	{
+		while (SDL_PollEvent(&e))
+			if (e.type == SDL_QUIT)
+				close_window();
+	}
+	
+}
+
+#endif
 
 
 int main(int ac, char **av)
 {
-	char	*filename;
+	char		*filename;
 
 	if (ac != 2)
 		file_error("Invalid number of arguments");
 	filename = av[1];
-	mlx_hook(get_window()->window_pointer, 2, 0L, &keys, NULL);
-	mlx_loop_hook(get_window()->context, &loop, NULL);
-	mlx_loop(get_window()->context);
+	ft_putendl(filename);
+	run();
+	return (1);
 }

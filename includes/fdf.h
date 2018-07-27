@@ -29,18 +29,10 @@
 # define DEG_RAD(x) ((x * M_PI) / 180)
 # define RAD_DEG(x) ((x * 180) / M_PI)
 
-# include <mlx.h>
+# include <SDLGF.h>
 # include <libft.h>
+# include <get_next_line.h>
 
-typedef struct	s_window
-{
-	void	*window_pointer;
-	void	*context;
-}				t_window;
 
-void		init_error(char *msg);
-void		file_error(char *msg);
-t_window	*get_window();
-void		close_window();
 
 #endif

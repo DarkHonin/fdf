@@ -13,3 +13,6 @@
 [submodule "dep/3dft"]
 	path = dep/3dft
 	url = https://github.com/DarkHonin/3dft.git
+[submodule "dep/SDLGF"]
+	path = dep/SDLGF
+	url = https://github.com/DarkHonin/SDLGF.git

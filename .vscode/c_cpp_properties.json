@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.16299.0",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.13.26128/bin/Hostx64/x64/cl.exe",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64",
+            "includePath": [
+                "${default}",
+                "${workspaceFolder}/includes",
+                "${workspaceFolder}/dep/SDLGF/includes",
+                "${workspaceFolder}/dep/LIBFT/includes"
+            ]
+        }
+    ],
+    "version": 4
+}

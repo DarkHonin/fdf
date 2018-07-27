@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"3dft.h": "c",
-		"matrix_ft.h": "c"
+		"matrix_ft.h": "c",
+		"stdlib.h": "c"
 	}
 }
