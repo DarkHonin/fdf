@@ -14,6 +14,7 @@
 # define FDF_H
 # define WINDOW_W 800
 # define WINDOW_H 600
+# define WINDOW_Z 0.1
 # define KEY_ESC 53
 # define KEY_UP 126
 # define KEY_LEFT 123

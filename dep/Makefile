@@ -18,5 +18,4 @@ re:
 	@echo "Rebuilding..."
 	@for i in $(LIBRAIRIES); do \
 		make -C $$i re LIBDIR=$(LIBDIR) -s ;\
-		echo -n "."; \
 	done

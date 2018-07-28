@@ -9,4 +9,4 @@ make: $(OBJS)
 
 rebuild:
 	make -C dep/$(LIB) fclean
-	make -C dep re
+	make -C dep

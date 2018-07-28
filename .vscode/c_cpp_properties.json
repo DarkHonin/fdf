@@ -15,7 +15,9 @@
                 "${default}",
                 "${workspaceFolder}/includes",
                 "${workspaceFolder}/dep/SDLGF/includes",
-                "${workspaceFolder}/dep/LIBFT/includes"
+                "${workspaceFolder}/dep/LIBFT/includes",
+                "${workspaceFolder}/dep/3dft/includes",
+                "${workspaceFolder}/dep/matrix_ft/includes"
             ]
         }
     ],
