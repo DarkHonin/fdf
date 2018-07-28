@@ -61,13 +61,14 @@ void run()
 {
 	SDL_Event	e;
 	t_point3_list list = MAKE_EMPTY_LIST(4);
-	t_line *lines;
+	t_quad *quad;
+	t_point3 *center;
+	center = MAKE_POINT(0, 0, 0);
 	list[0] = *MAKE_POINT(-50, -50, 1);
 	list[1] = *MAKE_POINT(50, -50, 1);
 	list[2] = *MAKE_POINT(50, 50, 1);
 	list[3] = *MAKE_POINT(-50, 50, 1);
-	lines = list_to_lines(list, 4);
-	line_itter(lines, 3, &draw_line);
+	quad = make_quad(list, center);
 	while (1)
 	{
 		while (SDL_PollEvent(&e))
@@ -80,7 +81,7 @@ void run()
 				Z((list + 2)) += (e.key.keysym.scancode == SDL_SCANCODE_UP ? 0.1:-0.1);
 				Z((list + 3)) += (e.key.keysym.scancode == SDL_SCANCODE_UP ? 0.1:-0.1);
 				clean();
-				line_itter(lines, 3, &draw_line);
+				itter_quad_lines(*quad, &draw_line);
 			}
 		flip();
 	}
