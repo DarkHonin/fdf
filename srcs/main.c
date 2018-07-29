@@ -56,19 +56,22 @@ void	draw_line(t_line a)
 	plot_line(a, 0.05, &draw_point);
 }
 
-
 void run()
 {
 	SDL_Event	e;
-	t_point3_list list = MAKE_EMPTY_LIST(4);
-	t_quad *quad;
+	t_size size = {5, 1};
+	t_point3_surface list = MAKE_EMPTY_SURFACE(size);
 	t_point3 *center;
+	t_mesh	*msh;
 	center = MAKE_POINT(0, 0, 0);
-	list[0] = *MAKE_POINT(-50, -50, 1);
-	list[1] = *MAKE_POINT(50, -50, 1);
-	list[2] = *MAKE_POINT(50, 50, 1);
-	list[3] = *MAKE_POINT(-50, 50, 1);
-	quad = make_quad(list, center);
+	list[0][0] = *MAKE_POINT(-50, -50, 1);
+	list[0][1] = *MAKE_POINT(50, -50, 1);
+	list[0][2] = *MAKE_POINT(50, 50, 1);
+	list[0][3] = *MAKE_POINT(-50, 50, 1);
+	list[0][4] = *MAKE_POINT(-100, 0, 1);
+	//t_surface_itter(&list, (t_size){5, 1}, &draw_point);
+	msh = make_mesh(list, size, center);
+	itter_mesh_points(*msh, &draw_point);
 	while (1)
 	{
 		while (SDL_PollEvent(&e))
@@ -76,12 +79,9 @@ void run()
 				close_window();
 			else if (e.type == SDL_KEYUP)
 			{
-				Z(list) += (e.key.keysym.scancode == SDL_SCANCODE_UP ? 0.1:-0.1);
-				Z((list + 1)) += (e.key.keysym.scancode == SDL_SCANCODE_UP ? 0.1:-0.1);
-				Z((list + 2)) += (e.key.keysym.scancode == SDL_SCANCODE_UP ? 0.1:-0.1);
-				Z((list + 3)) += (e.key.keysym.scancode == SDL_SCANCODE_UP ? 0.1:-0.1);
+				Z(center) += (e.key.keysym.scancode == SDL_SCANCODE_UP ? 0.1:-0.1);
 				clean();
-				itter_quad_lines(*quad, &draw_line);
+				itter_mesh_points(*msh, &draw_point);
 			}
 		flip();
 	}
