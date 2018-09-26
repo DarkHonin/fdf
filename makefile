@@ -1,7 +1,7 @@
 LIB_CFG=dep/libs.mk
 NAME=fdf.bin
+OS_SPESIFIC=""
 LIBDIR=$(realpath dep)
-OS_D=$(WORKING_DIR)/$(shell uname)
 include dep/gen.mk
 export NAME
 
