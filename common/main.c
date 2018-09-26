@@ -6,7 +6,7 @@
 /*   By: wgourley <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/27 11:20:37 by wgourley          #+#    #+#             */
-/*   Updated: 2018/09/26 15:28:16 by wgourley         ###   ########.fr       */
+/*   Updated: 2018/09/26 15:32:19 by wgourley         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int main(int ac, char **av)
 	char		*filename;
 	t_map 		*map;
 
-	space_set((get_stage()->camera_space), SPACE_C_T, (t_vect){0, 0, -5, 1});
+	space_set((get_stage()->camera_space), SPACE_C_T, (t_vect){0, 0, 5, 1});
 	if (ac != 2)
 		file_error("Invalid number of arguments");
 	filename = av[1];
